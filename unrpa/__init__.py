@@ -2,6 +2,7 @@ import itertools
 import operator
 import os
 import pickle
+import re
 import sys
 import traceback
 import zlib
@@ -249,9 +250,9 @@ class UnRPA:
     @staticmethod
     def ensure_str_path(path: Union[str, bytes]) -> str:
         if isinstance(path, str):
-            return path
+            return re.sub(r'.\x7f', '', path)
         else:
-            return path.decode("utf-8", "replace")
+            return re.sub(r'.\x7f', '', path.decode("utf-8", "replace"))
 
     @staticmethod
     def deobfuscate_index(
